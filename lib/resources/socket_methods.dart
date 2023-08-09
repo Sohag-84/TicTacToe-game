@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tic_tac_toe_game/provider/room_data_provider.dart';
 import 'package:tic_tac_toe_game/resources/socket_client.dart';
 import 'package:tic_tac_toe_game/screens/game_screen.dart';
+import 'package:tic_tac_toe_game/utils/utils.dart';
 
 class SocketMethods {
   final _socketClient = SocketClient.instance.socket!;
@@ -16,13 +17,41 @@ class SocketMethods {
     }
   }
 
-  ///for crate room success listener
+  ///join room
+  void joinRoom({required String nickname, required String roomId}) {
+    if (nickname.isNotEmpty && roomId.isNotEmpty) {
+      ///using emit we can send all type of data in the server
+      _socketClient.emit('joinRoom', {
+        'nickname': nickname,
+        'roomId': roomId,
+      });
+    }
+  }
+
+  ///for create room success listener
   void createRoomSuccessListener({required BuildContext context}) {
     _socketClient.on("createRoomSuccess", (room) {
       print("=== === Room data : $room === ===");
       Provider.of<RoomDataProvider>(context, listen: false)
           .updateRoomData(roomData: room);
       Navigator.pushNamed(context, GameScreen.routeName);
+    });
+  }
+
+  ///for join room success listener
+  void joinRoomSuccessListener({required BuildContext context}) {
+    _socketClient.on("joinRoomSuccess", (room) {
+      print("=== === Room data : $room === ===");
+      Provider.of<RoomDataProvider>(context, listen: false)
+          .updateRoomData(roomData: room);
+      Navigator.pushNamed(context, GameScreen.routeName);
+    });
+  }
+
+  ///for join room success listener
+  void errorOccurredListener({required BuildContext context}) {
+    _socketClient.on("errorOccurred", (errorMessage) {
+      showSnackBar(context: context, message: errorMessage);
     });
   }
 }

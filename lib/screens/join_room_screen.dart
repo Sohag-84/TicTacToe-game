@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe_game/resources/socket_methods.dart';
 import 'package:tic_tac_toe_game/responsive/responsive.dart';
 import 'package:tic_tac_toe_game/widgets/custom_button.dart';
 import 'package:tic_tac_toe_game/widgets/custom_text.dart';
@@ -17,6 +18,15 @@ class JoinRoomScreen extends StatefulWidget {
 class _JoinRoomScreenState extends State<JoinRoomScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _gameIdController = TextEditingController();
+
+  final SocketMethods _socketMethods = SocketMethods();
+
+  @override
+  void initState() {
+    super.initState();
+    _socketMethods.joinRoomSuccessListener(context: context);
+    _socketMethods.errorOccurredListener(context: context);
+  }
 
   @override
   void dispose() {
@@ -57,7 +67,13 @@ class _JoinRoomScreenState extends State<JoinRoomScreen> {
                 hintText: "Enter Game ID",
               ),
               SizedBox(height: size.height * 0.04),
-              CustomButton(onTap: () {}, text: "Join"),
+              CustomButton(
+                onTap: () => _socketMethods.joinRoom(
+                  nickname: _nameController.text,
+                  roomId: _gameIdController.text,
+                ),
+                text: "Join",
+              ),
             ],
           ),
         ),
