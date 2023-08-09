@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import 'package:tic_tac_toe_game/provider/room_data_provider.dart';
 import 'package:tic_tac_toe_game/resources/socket_client.dart';
 import 'package:tic_tac_toe_game/screens/game_screen.dart';
 
@@ -18,6 +20,8 @@ class SocketMethods {
   void createRoomSuccessListener({required BuildContext context}) {
     _socketClient.on("createRoomSuccess", (room) {
       print("=== === Room data : $room === ===");
+      Provider.of<RoomDataProvider>(context, listen: false)
+          .updateRoomData(roomData: room);
       Navigator.pushNamed(context, GameScreen.routeName);
     });
   }
