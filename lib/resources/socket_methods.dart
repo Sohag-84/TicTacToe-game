@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:tic_tac_toe_game/resources/socket_client.dart';
+import 'package:tic_tac_toe_game/screens/game_screen.dart';
 
 class SocketMethods {
   final _socketClient = SocketClient.instance.socket!;
@@ -10,5 +12,13 @@ class SocketMethods {
         'nickname': nickname,
       });
     }
+  }
+
+  ///for crate room success listener
+  void createRoomSuccessListener({required BuildContext context}) {
+    _socketClient.on("createRoomSuccess", (room) {
+      print("=== === Room data : $room === ===");
+      Navigator.pushNamed(context, GameScreen.routeName);
+    });
   }
 }
