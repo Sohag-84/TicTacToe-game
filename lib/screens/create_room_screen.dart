@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe_game/resources/socket_methods.dart';
 import 'package:tic_tac_toe_game/responsive/responsive.dart';
 import 'package:tic_tac_toe_game/widgets/custom_button.dart';
 import 'package:tic_tac_toe_game/widgets/custom_text.dart';
@@ -16,6 +17,8 @@ class CreateRoomScreen extends StatefulWidget {
 
 class _CreateRoomScreenState extends State<CreateRoomScreen> {
   final TextEditingController _nameController = TextEditingController();
+
+  final SocketMethods _socketMethods = SocketMethods();
 
   @override
   void dispose() {
@@ -50,7 +53,11 @@ class _CreateRoomScreenState extends State<CreateRoomScreen> {
                 hintText: "Enter your nickname",
               ),
               SizedBox(height: size.height * 0.04),
-              CustomButton(onTap: () {}, text: "Create"),
+              CustomButton(
+                onTap: () =>
+                    _socketMethods.createRoom(nickname: _nameController.text),
+                text: "Create",
+              ),
             ],
           ),
         ),
