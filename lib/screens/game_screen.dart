@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tic_tac_toe_game/provider/room_data_provider.dart';
@@ -13,10 +15,9 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
-    final data = Provider.of<RoomDataProvider>(context).roomData.toString();
     return Scaffold(
       body: Center(
-        child: Text(data.toString()),
+        child: Text(""),
       ),
     );
   }

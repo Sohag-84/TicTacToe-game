@@ -54,4 +54,17 @@ class SocketMethods {
       showSnackBar(context: context, message: errorMessage);
     });
   }
+
+  ///for update player data
+  void updatePlayersStateListener({required BuildContext context}) {
+    _socketClient.on('updatePlayers', (playerData) {
+      ///for update first player
+      Provider.of<RoomDataProvider>(context, listen: false)
+          .updatePlayer1(player1Data: playerData[0]);
+
+      /// for update second player
+      Provider.of<RoomDataProvider>(context, listen: false)
+          .updatePlayer2(player2Data: playerData[1]);
+    });
+  }
 }
