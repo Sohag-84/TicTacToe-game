@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe_game/screens/create_room_screen.dart';
+import 'package:tic_tac_toe_game/screens/join_room_screen.dart';
 import 'package:tic_tac_toe_game/screens/main_menu_screen.dart';
 import 'package:tic_tac_toe_game/utils/colors.dart';
 
@@ -11,7 +13,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,7 +21,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: bgColor,
       ),
-      home: MainMenuScreen(),
+      routes: {
+        MainMenuScreen.routeName: (context) => MainMenuScreen(),
+        CreateRoomScreen.routeName: (context) => CreateRoomScreen(),
+        JoinRoomScreen.routeName: (context) => JoinRoomScreen(),
+      },
+      initialRoute: MainMenuScreen.routeName,
     );
   }
 }

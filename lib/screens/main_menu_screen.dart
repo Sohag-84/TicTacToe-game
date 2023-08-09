@@ -5,6 +5,7 @@ import 'package:tic_tac_toe_game/responsive/responsive.dart';
 import 'package:tic_tac_toe_game/widgets/custom_button.dart';
 
 class MainMenuScreen extends StatelessWidget {
+  static String routeName = "/main-menu";
   const MainMenuScreen({super.key});
 
   @override
